@@ -4,11 +4,12 @@ const cStart = document.querySelector('.start')
 const canvas = document.getElementById('myCanvas')
 const ctx = canvas.getContext('2d')
 
-import { Background } from "./background.js";
-
-
 btStart.addEventListener('click',start)
 
+
+const backgroundImg = new Image()
+backgroundImg.src = '../assets/background.png'
+let bgY = 0
 
 
 function start(){
@@ -19,3 +20,23 @@ function start(){
       }, 950)
 }
 
+function drawBackgrounds(){
+    canvas.width = backgroundImg.width
+    canvas.height = backgroundImg.height
+    ctx.drawImage(backgroundImg, 0, bgY,canvas.width,canvas.height);
+}
+
+function draw(){
+    drawBackgrounds()
+}
+
+function update(){
+
+}
+
+function gameloop(){
+    draw()
+    requestAnimationFrame(gameloop)
+}
+
+gameloop()
