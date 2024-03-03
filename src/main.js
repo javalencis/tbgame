@@ -1,6 +1,8 @@
 import { Block } from "./Block.js"
 import { Hook } from "./Hook.js"
 import { Sky } from "./Sky.js"
+import { Base } from "./Base.js"
+
 const btStart = document.querySelector('.start-button')
 const titleStart = document.querySelector('.start-top')
 const cStart = document.querySelector('.start')
@@ -21,14 +23,16 @@ imgRope.src = '../assets/rope.png'
 imgBlock.src = '../assets/block.png'
 canvas.width = backgroundImg.width
 canvas.height = backgroundImg.height
+
+
 const hook = new Hook(ctx,imgHook,-66,0,imgHook.width,imgHook.height)
 const block = new Block(ctx,imgBlock,hook.getX()-36,122,imgBlock.width,imgBlock.height)
 const sky = new Sky(ctx,0,0,canvas.width,canvas.height)
-
+const base = new Base(ctx,150,215,128,60)
 
 let bgY = 0
 let yDown = 0
-let moveDownInit = 5000
+let moveDownInit = 150
 let score = 0
 let blocks = []
 
@@ -57,7 +61,7 @@ function backgroundDown(){
     if (yDown <= moveDownInit) {
         bgY += 1;
         sky.moveY();
-        //base.moveY();
+        base.moveY();
         if (score > 0) {
             blocks.forEach((block) => block.moveY());
         }
@@ -86,6 +90,7 @@ function drawBackgrounds(){
 function draw(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBackgrounds()
+    base.draw()
     hook.draw(imgRope)
     block.draw()
   
