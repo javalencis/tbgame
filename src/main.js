@@ -1,6 +1,6 @@
 import { Block } from "./Block.js"
 import { Hook } from "./Hook.js"
-
+import { Sky } from "./Sky.js"
 const btStart = document.querySelector('.start-button')
 const titleStart = document.querySelector('.start-top')
 const cStart = document.querySelector('.start')
@@ -14,17 +14,21 @@ const backgroundImg = new Image()
 const imgHook = new Image()
 const imgRope = new Image()
 const imgBlock = new Image()
+
 backgroundImg.src = '../assets/background.png'
 imgHook.src = '../assets/hook.png'
 imgRope.src = '../assets/rope.png'
 imgBlock.src = '../assets/block.png'
-
+canvas.width = backgroundImg.width
+canvas.height = backgroundImg.height
 const hook = new Hook(ctx,imgHook,-66,0,imgHook.width,imgHook.height)
 const block = new Block(ctx,imgBlock,hook.getX()-36,122,imgBlock.width,imgBlock.height)
+const sky = new Sky(ctx,0,0,canvas.width,canvas.height)
+
 
 let bgY = 0
 let yDown = 0
-let moveDownInit = 150
+let moveDownInit = 5000
 let score = 0
 let blocks = []
 
@@ -52,7 +56,7 @@ function mouseDown(){
 function backgroundDown(){
     if (yDown <= moveDownInit) {
         bgY += 1;
-        //.moveY();
+        sky.moveY();
         //base.moveY();
         if (score > 0) {
             blocks.forEach((block) => block.moveY());
@@ -74,8 +78,8 @@ function changeStates(){
 }
 
 function drawBackgrounds(){
-    canvas.width = backgroundImg.width
-    canvas.height = backgroundImg.height
+
+    sky.draw()
     ctx.drawImage(backgroundImg, 0, bgY,canvas.width,canvas.height);
 }
 
@@ -84,6 +88,7 @@ function draw(){
     drawBackgrounds()
     hook.draw(imgRope)
     block.draw()
+  
 }
 
 function update(){
