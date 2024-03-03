@@ -76,6 +76,7 @@ class Block extends GameObject {
         if(this.getX()>=0){
             this.inScene=true
         }else{
+            
             this.inScene = false
         }
 
