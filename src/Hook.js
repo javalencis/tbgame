@@ -5,6 +5,7 @@ class Hook extends GameObject {
         super(ctx, x, y, width, height);
         this.imgHook = imgHook;
         this.velX = 0
+        this.hasItem = true
     }
 
     draw(imgRope) {
@@ -33,6 +34,15 @@ class Hook extends GameObject {
 
     update(){
         this.moveX()
+        if(!this.hasItem){
+            if(this.getX()<=-66){
+                this.hasItem=true
+                this.setVelX(0)
+            }else{
+                this.setVelX(-4)
+
+            }
+        }
     }
 }
 

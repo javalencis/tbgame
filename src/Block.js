@@ -11,6 +11,7 @@ class Block extends GameObject {
         this.pointRotation = 0
         this.clockWise=true
         this.img = img
+        this.inScene = false
     }
     draw() {
         this.ctx.save();
@@ -31,6 +32,9 @@ class Block extends GameObject {
     }
     moveX() {
         this.x += this.velX
+    }
+    moveY(){
+        this.y += 1
     }
     rotation() {
         if(this.clockWise){
@@ -55,7 +59,7 @@ class Block extends GameObject {
             if(this.velY < 5){
                 this.velY+=0.4
             }
-            this.setVelX(this.clockWise ? 1 : -1.5)
+            this.setVelX(this.clockWise ? 1.5 : -1.5)
             this.rotation()
         }else if(this.isColliding && !this.isRotating){
             this.isDown=false
@@ -67,6 +71,12 @@ class Block extends GameObject {
                 this.setVelX(0)
             }
            this.y += this.velY
+        }
+
+        if(this.getX()>=0){
+            this.inScene=true
+        }else{
+            this.inScene = false
         }
 
     }
