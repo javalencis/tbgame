@@ -26,7 +26,7 @@ imgHook.src = "../assets/hook.png";
 imgRope.src = "../assets/rope.png";
 imgBlock.src = "../assets/block.png";
 imgHeart.src = "../assets/heart.png";
-imgCloud.src = "../assets/c1.png";
+
 
 canvas.width = backgroundImg.width;
 canvas.height = backgroundImg.height;
@@ -43,13 +43,14 @@ let block = new Block(
 
 const sky = new Sky(ctx, 0, 0, canvas.width, canvas.height);
 const base = new Base(ctx, 150, 215, 128, 60);
-const c1 = new Cloud(ctx, imgCloud, 100, 300, 200,200, canvas);
+
 let bgY = 0;
 let yDown = 0;
 let moveDownInit = 150;
 let score = 0;
 let prevScore = 0;
 let blocks = [];
+let clouds=[]
 let zigZag = true;
 let interval;
 let velHookBlock = 3;
@@ -85,6 +86,8 @@ function backgroundDown() {
         bgY += 1;
         sky.moveY();
         base.moveY();
+        clouds.forEach(item => item.moveY());
+
         if (score > 0) {
             blocks.forEach((block) => block.moveY());
         }
@@ -123,6 +126,10 @@ function blockOutScene() {
         lives--;
     }
 }
+function numRandom(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
 function movementZigZag() {
     if (score >= 5) {
         let time = 0;
@@ -225,19 +232,26 @@ function hookBlock() {
         }
     }
 }
+function createClouds(){
+    let velClouds=[0.2,-0.2,0.1,-0.1,0.3,-0.3]
 
+    for(let i = 0; i < 10 ; i++){
+        imgCloud.src = "../assets/c"+parseInt(numRandom(1,3))+".png";
+        clouds[i] =  new Cloud(ctx, imgCloud, numRandom(-50,canvas.width-150), numRandom(-4000,100), 200,200, velClouds[parseInt(numRandom(0,6))]);
+    }
+}
+createClouds()
 function drawBackgrounds() {
     canvas.width = backgroundImg.width;
     canvas.height = backgroundImg.height;
     sky.draw(canvas);
-    c1.draw();
+    clouds.forEach(item => item.draw());
     ctx.drawImage(backgroundImg, 0, bgY, canvas.width, canvas.height);
 }
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBackgrounds();
-    c1.draw()
     base.draw();
     hook.draw(imgHook,imgRope);
     blocks.forEach((block) => block.draw());
@@ -247,7 +261,8 @@ function draw() {
 }
 
 function update() {
-    //c1.update()
+    clouds.forEach(item => item.update());
+
     levels();
     if (zigZag) {
         movementZigZag();
@@ -259,7 +274,7 @@ function update() {
     changeStates();
     hook.update();
     block.update();
-    c1.update()
+    
 
 }
 
