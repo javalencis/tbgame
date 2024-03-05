@@ -3,6 +3,7 @@ import { Hook } from "./Hook.js";
 import { Sky } from "./Sky.js";
 import { Base } from "./Base.js";
 import { detectCollision } from "./utils.js";
+import { Cloud } from "./Cloud.js";
 
 const btStart = document.querySelector(".start-button");
 const titleStart = document.querySelector(".start-top");
@@ -17,19 +18,20 @@ const backgroundImg = new Image();
 const imgHook = new Image();
 const imgRope = new Image();
 const imgBlock = new Image();
+const imgCloud = new Image();
 const imgHeart = new Image();
-
 
 backgroundImg.src = "../assets/background.png";
 imgHook.src = "../assets/hook.png";
 imgRope.src = "../assets/rope.png";
 imgBlock.src = "../assets/block.png";
 imgHeart.src = "../assets/heart.png";
+imgCloud.src = "../assets/c1.png";
 
 canvas.width = backgroundImg.width;
 canvas.height = backgroundImg.height;
 
-const hook = new Hook(ctx, imgHook, -66, 0, imgHook.width, imgHook.height);
+const hook = new Hook(ctx, -66, 0, imgHook.width, imgHook.height);
 let block = new Block(
     ctx,
     imgBlock,
@@ -41,7 +43,7 @@ let block = new Block(
 
 const sky = new Sky(ctx, 0, 0, canvas.width, canvas.height);
 const base = new Base(ctx, 150, 215, 128, 60);
-
+const c1 = new Cloud(ctx, imgCloud, 100, 300, 100, 100, canvas);
 let bgY = 0;
 let yDown = 0;
 let moveDownInit = 150;
@@ -53,6 +55,7 @@ let interval;
 let velHookBlock = 3;
 let lives = 3;
 let direction = 0.4;
+
 const states = {
     ready: false,
     play: false,
@@ -117,7 +120,7 @@ function collisionBase() {
 function blockOutScene() {
     if (block.getY() > canvas.height) {
         createBlock();
-        lives--
+        lives--;
     }
 }
 function movementZigZag() {
@@ -224,8 +227,11 @@ function hookBlock() {
 }
 
 function drawBackgrounds() {
-    sky.draw();
+    canvas.width = backgroundImg.width;
+    canvas.height = backgroundImg.height;
+    sky.draw(canvas);
     ctx.drawImage(backgroundImg, 0, bgY, canvas.width, canvas.height);
+    c1.draw();
 }
 
 function draw() {
@@ -233,13 +239,15 @@ function draw() {
     drawBackgrounds();
 
     base.draw();
-    hook.draw(imgRope);
+    hook.draw(imgHook,imgRope);
     blocks.forEach((block) => block.draw());
     block.draw();
-    scoreAndLives()
+        
+    scoreAndLives();
 }
 
 function update() {
+    //c1.update()
     levels();
     if (zigZag) {
         movementZigZag();
@@ -251,6 +259,8 @@ function update() {
     changeStates();
     hook.update();
     block.update();
+
+
 }
 
 function gameloop() {

@@ -13,7 +13,9 @@ class Sky extends GameObject{
             "rgb(25, 0, 10)"
         ]
     }
-    draw(){
+    draw(canvas){
+        this.width=canvas.width
+        this.height=canvas.height
         const gradient = this.ctx.createLinearGradient(this.x,this.height+this.y, 0, -this.height*6+this.y);
         for (let i = 0; i < this.colors.length; i++) {
             gradient.addColorStop(i / (this.colors.length - 1), this.colors[i]);

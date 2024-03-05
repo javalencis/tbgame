@@ -15,10 +15,10 @@ class Block extends GameObject {
     }
     draw() {
         this.ctx.save();
-        this.ctx.translate(this.pointRotation, this.y + this.height);
+        this.ctx.translate(this.pointRotation, this.y +  this.img.height);
         this.ctx.rotate((Math.PI / 180) * this.currAngle);
-        this.ctx.translate(-(this.pointRotation), -(this.y + this.height));
-        this.ctx.drawImage(this.img,this.x, this.y, this.width, this.height);
+        this.ctx.translate(-(this.pointRotation), -(this.y +  this.img.height));
+        this.ctx.drawImage(this.img,this.x, this.y,  this.img.width,  this.img.height);
         this.ctx.restore();
     }
     setVelY(velY) {

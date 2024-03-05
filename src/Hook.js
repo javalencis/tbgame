@@ -1,24 +1,25 @@
 import { GameObject } from "./GameObject.js";
 
 class Hook extends GameObject {
-    constructor(ctx, imgHook, x, y, width, height) {
+    constructor(ctx, x, y, width, height) {
         super(ctx, x, y, width, height);
-        this.imgHook = imgHook;
+
         this.velX = 0
         this.hasItem = true
     }
 
-    draw(imgRope) {
+    draw(imgHook,imgRope) {
+      
         this.ctx.drawImage(
-            this.imgHook,
+            imgHook,
             this.x,
-            -this.height / 1.5,
-            this.width,
-            this.height
+            -imgHook.height / 1.5,
+            imgHook.width,
+            imgHook.height
         );
         this.ctx.drawImage(
             imgRope,
-            this.x - (imgRope.width - this.width) / 2,
+            this.x - (imgRope.width - imgHook.width) / 2,
             95,
             imgRope.width,
             imgRope.height * 1.5
