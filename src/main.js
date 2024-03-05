@@ -56,6 +56,7 @@ let interval;
 let velHookBlock = 3;
 let lives = 3;
 let direction = 0.4;
+let timeDirection =10 
 
 const states = {
     ready: false,
@@ -143,7 +144,7 @@ function movementZigZag() {
                 direction *= -1;
                 time = 0;
             }
-        }, 10);
+        }, timeDirection);
         zigZag = false;
     }
 }
@@ -183,7 +184,8 @@ function levels() {
     if (prevScore != score) {
         velHookBlock += score * 0.01;
         if (score > 5) {
-            direction += score * 0.01;
+            direction += score *(direction>0 ? 0.01 : -0.01);
+       
         }
         prevScore = score;
     }
@@ -237,7 +239,7 @@ function createClouds(){
 
     for(let i = 0; i < 10 ; i++){
         imgCloud.src = "../assets/c"+parseInt(numRandom(1,3))+".png";
-        clouds[i] =  new Cloud(ctx, imgCloud, numRandom(-50,canvas.width-150), numRandom(-4000,100), 200,200, velClouds[parseInt(numRandom(0,6))]);
+        clouds[i] =  new Cloud(ctx, imgCloud, numRandom(0,canvas.width-150), numRandom(-4000,100), 200,200, velClouds[parseInt(numRandom(0,6))]);
     }
 }
 createClouds()

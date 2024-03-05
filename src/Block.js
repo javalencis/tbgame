@@ -69,7 +69,7 @@ class Block extends GameObject {
         if (this.isDown) {
             if(!this.isRotating){
                 this.setVelX(0)
-                this.velY+=0.06
+                this.velY+=0.07
             }
            this.y += this.velY
         }
