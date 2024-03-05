@@ -18,7 +18,7 @@ const backgroundImg = new Image();
 const imgHook = new Image();
 const imgRope = new Image();
 const imgBlock = new Image();
-const imgCloud = new Image();
+
 const imgHeart = new Image();
 
 backgroundImg.src = "../assets/background.png";
@@ -236,10 +236,12 @@ function hookBlock() {
 }
 function createClouds(){
     let velClouds=[0.2,-0.2,0.1,-0.1,0.3,-0.3]
+    const cloudsSrc = ["../assets/c1.png","../assets/c2.png","../assets/c3.png"]
 
     for(let i = 0; i < 10 ; i++){
-        imgCloud.src = "../assets/c"+parseInt(numRandom(1,3))+".png";
-        clouds[i] =  new Cloud(ctx, imgCloud, numRandom(0,canvas.width-150), numRandom(-4000,100), 200,200, velClouds[parseInt(numRandom(0,6))]);
+        const imgCloud = new Image();
+        imgCloud.src = cloudsSrc[parseInt(numRandom(0,3))];
+        clouds[i] =  new Cloud(ctx, imgCloud, numRandom(0,canvas.width-220), numRandom(-2200,150), 200,200, velClouds[parseInt(numRandom(0,6))]);
     }
 }
 createClouds()

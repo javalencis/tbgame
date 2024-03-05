@@ -6,6 +6,7 @@ class Cloud extends GameObject{
         this.img = img
         this.velX = velX
         this.prevX =0
+        console.log( img.src);
     }
 
     draw(){
