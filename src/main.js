@@ -43,7 +43,7 @@ let block = new Block(
 
 const sky = new Sky(ctx, 0, 0, canvas.width, canvas.height);
 const base = new Base(ctx, 150, 215, 128, 60);
-const c1 = new Cloud(ctx, imgCloud, 100, 300, 100, 100, canvas);
+const c1 = new Cloud(ctx, imgCloud, 100, 300, 200,200, canvas);
 let bgY = 0;
 let yDown = 0;
 let moveDownInit = 150;
@@ -230,14 +230,14 @@ function drawBackgrounds() {
     canvas.width = backgroundImg.width;
     canvas.height = backgroundImg.height;
     sky.draw(canvas);
-    ctx.drawImage(backgroundImg, 0, bgY, canvas.width, canvas.height);
     c1.draw();
+    ctx.drawImage(backgroundImg, 0, bgY, canvas.width, canvas.height);
 }
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBackgrounds();
-
+    c1.draw()
     base.draw();
     hook.draw(imgHook,imgRope);
     blocks.forEach((block) => block.draw());
@@ -259,7 +259,7 @@ function update() {
     changeStates();
     hook.update();
     block.update();
-
+    c1.update()
 
 }
 
