@@ -5,7 +5,7 @@ class Block extends GameObject {
         this.isDown = false
         this.isColliding = false
         this.velX = 0
-        this.velY = 5
+        this.velY = 0
         this.isRotating = false
         this.currAngle = 0
         this.pointRotation = 0
@@ -69,6 +69,7 @@ class Block extends GameObject {
         if (this.isDown) {
             if(!this.isRotating){
                 this.setVelX(0)
+                this.velY+=0.06
             }
            this.y += this.velY
         }

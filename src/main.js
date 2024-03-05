@@ -114,7 +114,7 @@ function collisionBase() {
             states.play = true;
             states.ready = false;
             yDown = 0;
-            moveDownInit = 120;
+            moveDownInit = 130;
             score++;
         }
     }
@@ -172,7 +172,7 @@ function collisionsBlock() {
             blocks.push(block);
             createBlock();
             yDown = 0;
-            moveDownInit = 70;
+            moveDownInit = 68;
             score++;
         }
         block.setIsColliding(true);
