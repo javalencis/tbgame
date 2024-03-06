@@ -122,9 +122,11 @@ function collisionBase() {
 }
 
 function blockOutScene() {
-    if (block.getY() > canvas.height) {
-        createBlock();
-        lives--;
+    if(states.ready || states.play){
+        if (block.getY() > canvas.height) {
+            createBlock();
+            lives--;
+        }
     }
 }
 function numRandom(min, max) {
