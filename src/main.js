@@ -45,11 +45,12 @@ const base = new Base(ctx, 150, 215, 128, 60);
 
 let bgY = 0;
 let yDown = 0;
-let moveDownInit = 150;
+let moveDownInit = 150; 
 let score = 0;
 let prevScore = 0;
 let blocks = [];
 let clouds = [];
+let stones = []
 let zigZag = true;
 let interval;
 let velHookBlock = 3;
@@ -87,6 +88,7 @@ function backgroundDown() {
         sky.moveY();
         base.moveY();
         clouds.forEach((item) => item.moveY());
+        stones.forEach((item) => item.moveY());
 
         if (score > 0) {
             blocks.forEach((block) => block.moveY());
@@ -265,11 +267,41 @@ function createClouds() {
         );
     }
 }
+function createStones() {
+    let velStones = [0.2, -0.2, 0.1, -0.1, 0.3, -0.3];
+    const stonesSrc = [
+        "../assets/c4.png",
+        "../assets/c5.png",
+        "../assets/c6.png",
+        "../assets/c7.png",
+        "../assets/c8.png"
+    ];
+    let pos=0;
+    let prevPos =0;
+
+    for (let i = 0; i < 15; i++) {
+        pos = parseInt(numRandom(-5000, -2300))
+
+        const imgCloud = new Image();
+        imgCloud.src = stonesSrc[parseInt(numRandom(0, 5))];
+        stones[i] = new Cloud(
+            ctx,
+            imgCloud,
+            numRandom(0, canvas.width - 220),
+            pos != prevPos ? pos:pos+300,
+            200,
+            200,
+            velStones[parseInt(numRandom(0, 6))]
+        );
+        prevPos=pos
+    }
+}
 function drawBackgrounds() {
     canvas.width = backgroundImg.width;
     canvas.height = backgroundImg.height;
     sky.draw(canvas);
     clouds.forEach((item) => item.draw());
+    stones.forEach((item) => item.draw());
     ctx.drawImage(backgroundImg, 0, bgY, canvas.width, canvas.height);
 }
 
@@ -286,6 +318,7 @@ function draw() {
 
 function update() {
     clouds.forEach((item) => item.update());
+    stones.forEach((item) => item.update());
 
     levels();
     if (zigZag) {
@@ -307,4 +340,5 @@ function gameloop() {
 }
 
 createClouds();
+createStones()
 gameloop();
