@@ -27,7 +27,6 @@ imgRope.src = "../assets/rope.png";
 imgBlock.src = "../assets/block.png";
 imgHeart.src = "../assets/heart.png";
 
-
 canvas.width = backgroundImg.width;
 canvas.height = backgroundImg.height;
 
@@ -50,13 +49,13 @@ let moveDownInit = 150;
 let score = 0;
 let prevScore = 0;
 let blocks = [];
-let clouds=[]
+let clouds = [];
 let zigZag = true;
 let interval;
 let velHookBlock = 3;
 let lives = 3;
 let direction = 0.4;
-let timeDirection =10 
+let timeDirection = 10;
 
 const states = {
     ready: false,
@@ -87,7 +86,7 @@ function backgroundDown() {
         bgY += 1;
         sky.moveY();
         base.moveY();
-        clouds.forEach(item => item.moveY());
+        clouds.forEach((item) => item.moveY());
 
         if (score > 0) {
             blocks.forEach((block) => block.moveY());
@@ -122,11 +121,13 @@ function collisionBase() {
 }
 
 function blockOutScene() {
-    if(states.ready || states.play){
+    if (states.ready || states.play) {
+        // if(block.isDown && (block.isRotating || block.isColliding)){
         if (block.getY() > canvas.height) {
             createBlock();
             lives--;
         }
+        // }
     }
 }
 function numRandom(min, max) {
@@ -152,31 +153,36 @@ function movementZigZag() {
 }
 function collisionsBlock() {
     block.setIsColliding(false);
+
     if (detectCollision(block, blocks.at(-1))) {
         if (
-            block.getX() >
-            blocks.at(-1).getX() + blocks.at(-1).getWidth() * 0.5
+            (block.getX() > blocks.at(-1).getX() + blocks.at(-1).getWidth() * 0.5) && !block.isRotating
         ) {
             block.pointRotation =
                 blocks.at(-1).getX() + blocks.at(-1).getWidth();
             block.isRotating = true;
             block.clockWise = true;
+            console.log(1);
         } else if (
-            block.getX() + block.getWidth() * 0.5 <
-            blocks.at(-1).getX()
+            (block.getX() + block.getWidth() * 0.5 <
+            blocks.at(-1).getX()) && !block.isRotating
         ) {
             block.pointRotation = blocks.at(-1).getX();
             block.isRotating = true;
             block.clockWise = false;
+            console.log(2);
         } else {
-            block.isRotating = false;
-            block.isDown = false;
-            block.setVelX(0);
-            blocks.push(block);
-            createBlock();
-            yDown = 0;
-            moveDownInit = 68;
-            score++;
+            if (!block.isColliding && !block.isRotating) {
+                block.isRotating = false;
+                block.isDown = false;
+                block.setVelX(0);
+                blocks.push(block);
+                console.log(3);
+                createBlock();
+                yDown = 0;
+                moveDownInit = 68;
+                score++;
+            }
         }
         block.setIsColliding(true);
     }
@@ -186,8 +192,7 @@ function levels() {
     if (prevScore != score) {
         velHookBlock += score * 0.01;
         if (score > 5) {
-            direction += score *(direction>0 ? 0.01 : -0.01);
-       
+            direction += score * (direction > 0 ? 0.01 : -0.01);
         }
         prevScore = score;
     }
@@ -220,6 +225,7 @@ function changeStates() {
     }
 }
 function moveHookBlock() {
+    if(block.isRotating) return
     if (block.getX() + block.getWidth() >= canvas.width || block.getX() < 0) {
         hook.velX *= -1;
         block.velX *= -1;
@@ -229,6 +235,7 @@ function hookBlock() {
     if (!states.play) return;
     if (hook.hasItem) {
         if (block.inScene) {
+            if(block.isRotating) return
             moveHookBlock();
         } else {
             hook.setVelX(velHookBlock);
@@ -236,22 +243,33 @@ function hookBlock() {
         }
     }
 }
-function createClouds(){
-    let velClouds=[0.2,-0.2,0.1,-0.1,0.3,-0.3]
-    const cloudsSrc = ["../assets/c1.png","../assets/c2.png","../assets/c3.png"]
+function createClouds() {
+    let velClouds = [0.2, -0.2, 0.1, -0.1, 0.3, -0.3];
+    const cloudsSrc = [
+        "../assets/c1.png",
+        "../assets/c2.png",
+        "../assets/c3.png",
+    ];
 
-    for(let i = 0; i < 10 ; i++){
+    for (let i = 0; i < 10; i++) {
         const imgCloud = new Image();
-        imgCloud.src = cloudsSrc[parseInt(numRandom(0,3))];
-        clouds[i] =  new Cloud(ctx, imgCloud, numRandom(0,canvas.width-220), numRandom(-2200,150), 200,200, velClouds[parseInt(numRandom(0,6))]);
+        imgCloud.src = cloudsSrc[parseInt(numRandom(0, 3))];
+        clouds[i] = new Cloud(
+            ctx,
+            imgCloud,
+            numRandom(0, canvas.width - 220),
+            numRandom(-2200, 150),
+            200,
+            200,
+            velClouds[parseInt(numRandom(0, 6))]
+        );
     }
 }
-createClouds()
 function drawBackgrounds() {
     canvas.width = backgroundImg.width;
     canvas.height = backgroundImg.height;
     sky.draw(canvas);
-    clouds.forEach(item => item.draw());
+    clouds.forEach((item) => item.draw());
     ctx.drawImage(backgroundImg, 0, bgY, canvas.width, canvas.height);
 }
 
@@ -259,15 +277,15 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBackgrounds();
     base.draw();
-    hook.draw(imgHook,imgRope);
+    hook.draw(imgHook, imgRope);
     blocks.forEach((block) => block.draw());
     block.draw();
-        
+
     scoreAndLives();
 }
 
 function update() {
-    clouds.forEach(item => item.update());
+    clouds.forEach((item) => item.update());
 
     levels();
     if (zigZag) {
@@ -280,8 +298,6 @@ function update() {
     changeStates();
     hook.update();
     block.update();
-    
-
 }
 
 function gameloop() {
@@ -290,4 +306,5 @@ function gameloop() {
     requestAnimationFrame(gameloop);
 }
 
+createClouds();
 gameloop();
