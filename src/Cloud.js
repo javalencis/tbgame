@@ -16,7 +16,7 @@ class Cloud extends GameObject{
         this.x+=this.velX
     }
     moveY(){
-        this.y+=1
+        this.y+=2
     }
     update(){
         this.moveX()

@@ -40,7 +40,7 @@ class Hook extends GameObject {
                 this.hasItem=true
                 this.setVelX(0)
             }else{
-                this.setVelX(-4)
+                this.setVelX(-8)
 
             }
         }

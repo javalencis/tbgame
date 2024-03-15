@@ -11,7 +11,7 @@ class Base  extends GameObject{
     }
 
     moveY(){
-        this.y+=1
+        this.y+=2
     }
 
 

@@ -40,20 +40,20 @@ class Block extends GameObject {
         this.x += this.velX;
     }
     moveY() {
-        this.y += 1;
+        this.y += 2;
     }
     rotation() {
         if (this.clockWise) {
-            this.currAngle += 1;
+            this.currAngle += 4;
         } else {
-            this.currAngle -= 1;
+            this.currAngle -= 4;
         }
     }
 
     update() {
         this.moveX();
         if (this.isColliding && this.isRotating) {
-            this.setVelX(this.clockWise ? 1 : -1);
+            this.setVelX(this.clockWise ? 2 : -2);
             this.setVelY(0);
             this.rotation();
         } else if (!this.isColliding && this.isRotating) {
@@ -62,10 +62,10 @@ class Block extends GameObject {
             } else {
                 this.pointRotation = this.x + this.width;
             }
-            if (this.velY < 5) {
-                this.velY += 0.4;
+            if (this.velY < 10) {
+                this.velY += 0.8;
             }
-            this.setVelX(this.clockWise ? 1.5 : -1.5);
+            this.setVelX(this.clockWise ? 3 : -3);
             this.rotation();
         } else if (this.isColliding && !this.isRotating) {
             this.isDown = false;
@@ -74,7 +74,7 @@ class Block extends GameObject {
         if (this.isDown) {
             if (!this.isRotating) {
                 this.setVelX(0);
-                this.velY += 0.075;
+                this.velY += 0.3;
             }
             this.y += this.velY;
         }

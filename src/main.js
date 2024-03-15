@@ -53,7 +53,7 @@ let clouds = [];
 let stones = []
 let zigZag = true;
 let interval;
-let velHookBlock = 3;
+let velHookBlock = 6;
 let lives = 3;
 let direction = 0.4;
 let timeDirection = 10;
@@ -84,7 +84,7 @@ function mouseDown() {
 
 function backgroundDown() {
     if (yDown <= moveDownInit) {
-        bgY += 1;
+        bgY += 2;
         sky.moveY();
         base.moveY();
         clouds.forEach((item) => item.moveY());
@@ -93,7 +93,7 @@ function backgroundDown() {
         if (score > 0) {
             blocks.forEach((block) => block.moveY());
         }
-        yDown++;
+        yDown+=2;
     }
 }
 
@@ -215,8 +215,8 @@ function scoreAndLives() {
 function changeStates() {
     if (states.ready) {
         if (hook.getX() < 200) {
-            hook.setVelX(2);
-            block.setVelX(2);
+            hook.setVelX(4);
+            block.setVelX(4);
         } else {
             hook.setVelX(0);
             block.setVelX(0);
@@ -246,7 +246,7 @@ function hookBlock() {
     }
 }
 function createClouds() {
-    let velClouds = [0.2, -0.2, 0.1, -0.1, 0.3, -0.3];
+    let velClouds = [0.4, -0.4, 0.2, -0.2, 0.6, -0.6];
     const cloudsSrc = [
         "../assets/c1.png",
         "../assets/c2.png",
@@ -268,7 +268,7 @@ function createClouds() {
     }
 }
 function createStones() {
-    let velStones = [0.2, -0.2, 0.1, -0.1, 0.3, -0.3];
+    let velStones = [0.4, -0.4, 0.2, -0.2, 0.6, -0.6];
     const stonesSrc = [
         "../assets/c4.png",
         "../assets/c5.png",

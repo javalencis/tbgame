@@ -24,7 +24,7 @@ class Sky extends GameObject{
        this.ctx.fillRect(0,0,this.width, this.height);
     }
     moveY(){
-        this.y+=1
+        this.y+=2
     }
 }
 
