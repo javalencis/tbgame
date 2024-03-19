@@ -49,9 +49,14 @@ canvas{
 .container .start-top img{
    width: 220px;
 }
+.container .start-button{
+  
+    padding-top: 110px;
+}
 .container .start-button img{
     width: 250px;
     cursor: pointer;
+    margin-top: 50px;
 }
 .container .gameover{
     height: 100%;

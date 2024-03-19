@@ -22,7 +22,7 @@ const imgBlock = new Image();
 const imgHeart = new Image();
 
 backgroundImg.src = "../assets/background.png";
-imgHook.src = "../assets/hook.png";
+imgHook.src = "../assets/hook.gif";
 imgRope.src = "../assets/rope.png";
 imgBlock.src = "../assets/block.png";
 imgHeart.src = "../assets/heart.png";
@@ -30,22 +30,22 @@ imgHeart.src = "../assets/heart.png";
 canvas.width = backgroundImg.width;
 canvas.height = backgroundImg.height;
 
-const hook = new Hook(ctx, -66, 0, imgHook.width, imgHook.height);
+const hook = new Hook(ctx, -100, 0, imgHook.width, imgHook.height);
 let block = new Block(
     ctx,
     imgBlock,
-    hook.getX() - 36,
+    hook.getX(),
     122,
     imgBlock.width,
     imgBlock.height
 );
 
 const sky = new Sky(ctx, 0, 0, canvas.width, canvas.height);
-const base = new Base(ctx, 150, 215, 128, 60);
+const base = new Base(ctx, 175, 332, 100, 60);
 
 let bgY = 0;
 let yDown = 0;
-let moveDownInit = 150; 
+let moveDownInit = 100; 
 let score = 0;
 let prevScore = 0;
 let blocks = [];
@@ -101,7 +101,7 @@ function createBlock() {
     block = new Block(
         ctx,
         imgBlock,
-        -102,
+        -100,
         122,
         imgBlock.width,
         imgBlock.height
@@ -116,7 +116,7 @@ function collisionBase() {
             states.play = true;
             states.ready = false;
             yDown = 0;
-            moveDownInit = 130;
+            moveDownInit = 80;
             score++;
         }
     }
@@ -182,7 +182,7 @@ function collisionsBlock() {
                 console.log(3);
                 createBlock();
                 yDown = 0;
-                moveDownInit = 68;
+                moveDownInit = 64;
                 score++;
             }
         }
@@ -194,7 +194,7 @@ function levels() {
     if (prevScore != score) {
         velHookBlock += score * 0.01;
         if (score > 5) {
-            direction += score * (direction > 0 ? 0.01 : -0.01);
+            direction += score * (direction > 0 ? 0.001 : -0.001);
         }
         prevScore = score;
     }
@@ -202,19 +202,20 @@ function levels() {
 
 function scoreAndLives() {
     if (states.play || states.ready) {
-        ctx.font = "32px Arial";
-        ctx.fillStyle = "black";
+        var font = new FontFace('golden', 'url(../fonts/golden.ttf)')
+        ctx.font = "32px golden";
+        ctx.fillStyle = "white";
         ctx.fillText(score, 16, 36);
 
-        ctx.drawImage(imgHeart, 380, 16, 34, 30);
-        ctx.font = "24px Arial";
+        ctx.drawImage(imgHeart, 380, 14, 34, 30);
+        ctx.font = "24px golden";
         ctx.fillStyle = "red";
         ctx.fillText(lives, 365, 36);
     }
 }
 function changeStates() {
     if (states.ready) {
-        if (hook.getX() < 200) {
+        if (hook.getX() < 170) {
             hook.setVelX(4);
             block.setVelX(4);
         } else {
@@ -300,8 +301,8 @@ function drawBackgrounds() {
     canvas.width = backgroundImg.width;
     canvas.height = backgroundImg.height;
     sky.draw(canvas);
-    clouds.forEach((item) => item.draw());
-    stones.forEach((item) => item.draw());
+    // clouds.forEach((item) => item.draw());
+    // stones.forEach((item) => item.draw());
     ctx.drawImage(backgroundImg, 0, bgY, canvas.width, canvas.height);
 }
 
