@@ -5,17 +5,17 @@ import { Base } from "./Base.js";
 import { detectCollision } from "./utils.js";
 import { Cloud } from "./Cloud.js";
 
-const btStart = document.querySelector(".start-button"); 
-const btGameOver = document.querySelector(".gameover-button"); 
+const btStart = document.querySelector(".start-button");
+const btGameOver = document.querySelector(".gameover-button");
 const titleStart = document.querySelector(".start-top");
 const cStart = document.querySelector(".start");
-const txtCupon= document.querySelector(".msn-cupon");
+const txtCupon = document.querySelector(".msn-cupon");
 const cGameOver = document.querySelector(".gameover");
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
 btStart.addEventListener("click", start);
-btGameOver.addEventListener("click",again)
+btGameOver.addEventListener("click", again);
 document.addEventListener("mousedown", mouseDown);
 
 const backgroundImg = new Image();
@@ -33,39 +33,32 @@ imgHook.src = "../assets/hook.gif";
 imgBlock.src = "../assets/block.png";
 imgHeart.src = "../assets/heart.png";
 imgPatron.src = "../assets/bgame.png";
-imgBlockP.src = "../assets/blockp.png"
+imgBlockP.src = "../assets/blockp.png";
 canvas.width = backgroundImg.width;
 canvas.height = backgroundImg.height;
 
 let hook = new Hook(ctx, -100, 0, imgHook.width, imgHook.height);
-let block = new Block(
-    ctx,
-    imgBlock,
-    hook.getX(),
-    122,
-    100,
-    imgBlock.height
-);
+let block = new Block(ctx, imgBlock, hook.getX(), 122, 100, imgBlock.height);
 
-let sky = new Sky(ctx, 0,  -600, 450, 1200);
+let sky = new Sky(ctx, 0, -600, 450, 1200);
 let base = new Base(ctx, 175, 332, 100, 60);
 
 let bgY = 0;
 let yDown = 0;
-let moveDownInit = 100; 
+let moveDownInit = 100;
 let score = 0;
 let prevScore = 0;
 let blocks = [];
 let clouds = [];
-let stones = []
+let stones = [];
 let zigZag = true;
 let interval;
 let velHookBlock = 6;
-let lives = 0;
+let lives = 3;
 let direction = 0.4;
 let timeDirection = 10;
 
-let states = {
+export let states = {
     ready: false,
     play: false,
     gameover: false,
@@ -101,7 +94,7 @@ function backgroundDown() {
         if (score > 0) {
             blocks.forEach((block) => block.moveY());
         }
-        yDown+=2;
+        yDown += 2;
     }
 }
 
@@ -116,7 +109,7 @@ function createBlock() {
     );
 }
 function collisionBase() {
-    if(score === 0){
+    if (score === 0) {
         if (block.y + 66 >= 426) {
             block.isDown = false;
             blocks.push(block);
@@ -128,7 +121,6 @@ function collisionBase() {
             score++;
         }
     }
-    
 }
 
 function blockOutScene() {
@@ -168,23 +160,23 @@ function collisionsBlock() {
 
     if (detectCollision(block, blocks.at(-1))) {
         if (
-            (block.getX() > blocks.at(-1).getX() + blocks.at(-1).getWidth() * 0.5) 
+            block.getX() >
+            blocks.at(-1).getX() + blocks.at(-1).getWidth() * 0.5
         ) {
-
-            block.pointRotation = blocks.at(-1).getX() + blocks.at(-1).getWidth();
+            block.pointRotation =
+                blocks.at(-1).getX() + blocks.at(-1).getWidth();
             block.isRotating = true;
             block.clockWise = true;
-  
         } else if (
-            (block.getX() + block.getWidth() * 0.5 < blocks.at(-1).getX()) 
+            block.getX() + block.getWidth() * 0.5 <
+            blocks.at(-1).getX()
         ) {
             block.pointRotation = blocks.at(-1).getX();
             block.isRotating = true;
             block.clockWise = false;
-   
         } else {
             if (!block.isColliding && !block.isRotating) {
-                blockPerfect()
+                blockPerfect();
                 block.isRotating = false;
                 block.isDown = false;
                 block.setVelX(0);
@@ -199,10 +191,10 @@ function collisionsBlock() {
         block.setIsColliding(true);
     }
 }
-function blockPerfect(){
-    if(Math.abs(block.getX()-blocks.at(-1).getX()) <= 10){
-        block.img = imgBlockP
-        block.setX(blocks.at(-1).getX())
+function blockPerfect() {
+    if (Math.abs(block.getX() - blocks.at(-1).getX()) <= 10) {
+        block.img = imgBlockP;
+        block.setX(blocks.at(-1).getX());
     }
 }
 function levels() {
@@ -217,15 +209,31 @@ function levels() {
 
 function scoreAndLives() {
     if (states.play || states.ready) {
-        var font = new FontFace('golden', 'url(../fonts/golden.ttf)')
+        var font = new FontFace("golden", "url(../fonts/golden.ttf)");
         ctx.font = "32px golden";
-        ctx.fillStyle = "white";
+        ctx.fillStyle = "#fff92e";
+    
+        ctx.shadowColor = "#fff92e"; 
+
+        
+        ctx.shadowOffsetX = 0; 
+
+        ctx.shadowOffsetY = 0; 
+        ctx.shadowBlur = 10; 
         ctx.fillText(score, 16, 36);
 
-        ctx.drawImage(imgHeart, 380, 14, 34, 30);
-        ctx.font = "24px golden";
-        ctx.fillStyle = "red";
+        ctx.font = "32px golden";
+        ctx.fillStyle = "#ef8903";
+        
+        ctx.shadowColor = "#ef8903"; 
+        
+        
+        ctx.shadowOffsetX = 0; 
+        
+        ctx.shadowOffsetY = 0; 
+        ctx.shadowBlur = 10; 
         ctx.fillText(lives, 365, 36);
+        ctx.drawImage(imgHeart, 390, 6, 40, 40);
     }
 }
 function changeStates() {
@@ -240,11 +248,11 @@ function changeStates() {
         backgroundDown();
     } else if (states.play) {
         backgroundDown();
-        sky.update()
+        sky.update();
     }
 }
 function moveHookBlock() {
-    if(block.isRotating) return
+    if (block.isRotating) return;
     if (block.getX() + block.getWidth() >= canvas.width || block.getX() < 0) {
         hook.velX *= -1;
         block.velX *= -1;
@@ -254,7 +262,7 @@ function hookBlock() {
     if (!states.play) return;
     if (hook.hasItem) {
         if (block.inScene) {
-            if(block.isRotating) return
+            if (block.isRotating) return;
             moveHookBlock();
         } else {
             hook.setVelX(velHookBlock);
@@ -295,23 +303,33 @@ function drawBackgrounds() {
     ctx.drawImage(backgroundImg, 0, bgY, canvas.width, canvas.height);
 }
 
-function gameOver(){
-    if(lives===0){
-        document.removeEventListener("mousedown",mouseDown)
-        if(score<=10){
-            txtCupon.textContent ="SHIPGAMER"
-        }else if(score <=20){
-            txtCupon.textContent ="5PLAYER"
-        }else{
-            txtCupon.textContent ="WINNER10"
+function gameOver() {
+    if (lives === 0) {
+        states.gameover = true;
+        document.removeEventListener("mousedown", mouseDown);
+        if (score <= 10) {
+            txtCupon.textContent = "SHIPGAMER";
+        } else if (score <= 20) {
+            txtCupon.textContent = "5PLAYER";
+        } else {
+            txtCupon.textContent = "WINNER10";
         }
-        cGameOver.style.display = "flex"
-    }else{
-        cGameOver.style.display = "none"
+        cGameOver.style.display = "flex";
+    } else {
+        cGameOver.style.display = "none";
+    }
+    if (states.gameover) {
+        let text = document.querySelector(".msn-cupon").innerHTML;
+        let btCopy = document.querySelector(".content-cupon");
+        const copy = () => {
+            navigator.clipboard.writeText(text);
+            console.log("Cupon copiado");
+        };
+        btCopy.addEventListener("click", copy);
     }
 }
 
-function again(){
+function again() {
     hook = new Hook(ctx, -100, 0, imgHook.width, imgHook.height);
     block = new Block(
         ctx,
@@ -321,24 +339,24 @@ function again(){
         imgBlock.width,
         imgBlock.height
     );
-    
-    sky = new Sky(ctx, 0,  -600, 450, 1200);
+
+    sky = new Sky(ctx, 0, -600, 450, 1200);
     base = new Base(ctx, 175, 332, 100, 60);
     bgY = 0;
     yDown = 0;
-    moveDownInit = 100; 
+    moveDownInit = 100;
     score = 0;
     prevScore = 0;
     blocks = [];
     clouds = [];
-    stones = []
+    stones = [];
     zigZag = true;
     clearInterval(interval);
     velHookBlock = 6;
     lives = 3;
     direction = 0.4;
     timeDirection = 10;
-    
+
     states = {
         ready: true,
         play: false,
@@ -346,8 +364,6 @@ function again(){
     };
 
     document.addEventListener("mousedown", mouseDown);
-    
-
 }
 
 function draw() {
@@ -362,7 +378,6 @@ function draw() {
 }
 
 function update() {
-
     clouds.forEach((item) => item.update());
     stones.forEach((item) => item.update());
     //sky.update()
@@ -377,7 +392,7 @@ function update() {
     changeStates();
     hook.update();
     block.update();
-    gameOver()
+    gameOver();
 }
 
 function gameloop() {

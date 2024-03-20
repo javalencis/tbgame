@@ -54,7 +54,7 @@ canvas{
 }
 
 .container .start{
-    display: none;
+    display: flex;
     height: 100%;
 
     flex-direction: column;
@@ -78,7 +78,7 @@ canvas{
 }
 .container .gameover{
     height: 100%;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     position: relative;
