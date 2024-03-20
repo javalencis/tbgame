@@ -20,7 +20,7 @@ class Cloud extends GameObject{
     }
     update(){
         this.moveX()
-        if (Math.abs((this.prevX + Math.abs(this.velX)) % 100) < 0.01) {
+        if (Math.abs((this.prevX + Math.abs(this.velX)) % 80) < 0.01) {
             this.velX *= -1;
             this.prevX = 0;
         } else {

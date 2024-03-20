@@ -253,21 +253,21 @@ function hookBlock() {
 function createClouds() {
     let velClouds = [0.4, -0.4, 0.2, -0.2, 0.6, -0.6];
     const cloudsSrc = [
-        "../assets/c1.png",
-        "../assets/c2.png",
-        "../assets/c3.png",
+        "../assets/gr1.png",
+        "../assets/gr2.png",
+        "../assets/gr3.png",
     ];
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 20; i++) {
         const imgCloud = new Image();
         imgCloud.src = cloudsSrc[parseInt(numRandom(0, 3))];
         clouds[i] = new Cloud(
             ctx,
             imgCloud,
             numRandom(0, canvas.width - 220),
-            numRandom(-2200, 150),
-            200,
-            200,
+            numRandom(-5000, 150),
+            180,
+            180,
             velClouds[parseInt(numRandom(0, 6))]
         );
     }
@@ -306,7 +306,7 @@ function drawBackgrounds() {
     canvas.height = backgroundImg.height;
     sky.draw(imgPatron);
     //ctx.drawImage(imgPatron, 0, 0, canvas.width, canvas.height);
-    // clouds.forEach((item) => item.draw());
+    clouds.forEach((item) => item.draw());
     // stones.forEach((item) => item.draw());
     ctx.drawImage(backgroundImg, 0, bgY, canvas.width, canvas.height);
 }
