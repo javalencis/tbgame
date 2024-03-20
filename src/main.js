@@ -5,13 +5,17 @@ import { Base } from "./Base.js";
 import { detectCollision } from "./utils.js";
 import { Cloud } from "./Cloud.js";
 
-const btStart = document.querySelector(".start-button");
+const btStart = document.querySelector(".start-button"); 
+const btGameOver = document.querySelector(".gameover-button"); 
 const titleStart = document.querySelector(".start-top");
 const cStart = document.querySelector(".start");
+const txtCupon= document.querySelector(".msn-cupon");
+const cGameOver = document.querySelector(".gameover");
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
 btStart.addEventListener("click", start);
+btGameOver.addEventListener("click",again)
 document.addEventListener("mousedown", mouseDown);
 
 const backgroundImg = new Image();
@@ -32,7 +36,7 @@ imgPatron.src = "../assets/bgame.png";
 canvas.width = backgroundImg.width;
 canvas.height = backgroundImg.height;
 
-const hook = new Hook(ctx, -100, 0, imgHook.width, imgHook.height);
+let hook = new Hook(ctx, -100, 0, imgHook.width, imgHook.height);
 let block = new Block(
     ctx,
     imgBlock,
@@ -42,8 +46,8 @@ let block = new Block(
     imgBlock.height
 );
 
-const sky = new Sky(ctx, 0,  -600, imgPatron.width, imgPatron.height);
-const base = new Base(ctx, 175, 332, 100, 60);
+let sky = new Sky(ctx, 0,  -600, 450, 1200);
+let base = new Base(ctx, 175, 332, 100, 60);
 
 let bgY = 0;
 let yDown = 0;
@@ -60,7 +64,7 @@ let lives = 3;
 let direction = 0.4;
 let timeDirection = 10;
 
-const states = {
+let states = {
     ready: false,
     play: false,
     gameover: false,
@@ -82,6 +86,7 @@ function mouseDown() {
         block.isDown = true;
         hook.hasItem = false;
     }
+    console.log("down");
 }
 
 function backgroundDown() {
@@ -272,35 +277,7 @@ function createClouds() {
         );
     }
 }
-function createStones() {
-    let velStones = [0.4, -0.4, 0.2, -0.2, 0.6, -0.6];
-    const stonesSrc = [
-        "../assets/c4.png",
-        "../assets/c5.png",
-        "../assets/c6.png",
-        "../assets/c7.png",
-        "../assets/c8.png"
-    ];
-    let pos=0;
-    let prevPos =0;
 
-    for (let i = 0; i < 15; i++) {
-        pos = parseInt(numRandom(-5000, -2300))
-
-        const imgCloud = new Image();
-        imgCloud.src = stonesSrc[parseInt(numRandom(0, 5))];
-        stones[i] = new Cloud(
-            ctx,
-            imgCloud,
-            numRandom(0, canvas.width - 220),
-            pos != prevPos ? pos:pos+300,
-            200,
-            200,
-            velStones[parseInt(numRandom(0, 6))]
-        );
-        prevPos=pos
-    }
-}
 function drawBackgrounds() {
     canvas.width = backgroundImg.width;
     canvas.height = backgroundImg.height;
@@ -309,6 +286,61 @@ function drawBackgrounds() {
     clouds.forEach((item) => item.draw());
     // stones.forEach((item) => item.draw());
     ctx.drawImage(backgroundImg, 0, bgY, canvas.width, canvas.height);
+}
+
+function gameOver(){
+    if(lives===0){
+        document.removeEventListener("mousedown",mouseDown)
+        if(score<=10){
+            txtCupon.textContent ="SHIPGAMER"
+        }else if(score <=20){
+            txtCupon.textContent ="5PLAYER"
+        }else{
+            txtCupon.textContent ="WINNER10"
+        }
+        cGameOver.style.display = "flex"
+    }else{
+        cGameOver.style.display = "none"
+    }
+}
+
+function again(){
+    hook = new Hook(ctx, -100, 0, imgHook.width, imgHook.height);
+    block = new Block(
+        ctx,
+        imgBlock,
+        hook.getX(),
+        122,
+        imgBlock.width,
+        imgBlock.height
+    );
+    
+    sky = new Sky(ctx, 0,  -600, 450, 1200);
+    base = new Base(ctx, 175, 332, 100, 60);
+    bgY = 0;
+    yDown = 0;
+    moveDownInit = 100; 
+    score = 0;
+    prevScore = 0;
+    blocks = [];
+    clouds = [];
+    stones = []
+    zigZag = true;
+    clearInterval(interval);
+    velHookBlock = 6;
+    lives = 3;
+    direction = 0.4;
+    timeDirection = 10;
+    
+    states = {
+        ready: true,
+        play: false,
+        gameover: false,
+    };
+
+    document.addEventListener("mousedown", mouseDown);
+    
+
 }
 
 function draw() {
@@ -337,6 +369,7 @@ function update() {
     changeStates();
     hook.update();
     block.update();
+    gameOver()
 }
 
 function gameloop() {
@@ -346,5 +379,4 @@ function gameloop() {
 }
 
 createClouds();
-createStones()
 gameloop();

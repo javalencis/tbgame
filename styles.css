@@ -84,7 +84,7 @@ canvas{
     position: relative;
 }
 .container .gameover-back img{
-    width: 300px;
+    width: 360px;
     
 }
 
@@ -95,7 +95,8 @@ canvas{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content:center;
+    gap: 20px;
 }
 
 .container .gameover-button img{
