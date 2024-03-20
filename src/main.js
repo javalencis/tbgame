@@ -22,6 +22,7 @@ const backgroundImg = new Image();
 const imgHook = new Image();
 const imgRope = new Image();
 const imgBlock = new Image();
+const imgBlockP = new Image();
 
 const imgHeart = new Image();
 const imgPatron = new Image();
@@ -32,7 +33,7 @@ imgRope.src = "../assets/rope.png";
 imgBlock.src = "../assets/block.png";
 imgHeart.src = "../assets/heart.png";
 imgPatron.src = "../assets/bgame.png";
-
+imgBlockP.src = "../assets/blockp.png"
 canvas.width = backgroundImg.width;
 canvas.height = backgroundImg.height;
 
@@ -168,14 +169,12 @@ function collisionsBlock() {
         if (
             (block.getX() > blocks.at(-1).getX() + blocks.at(-1).getWidth() * 0.5) && !block.isRotating
         ) {
-            block.pointRotation =
-                blocks.at(-1).getX() + blocks.at(-1).getWidth();
+            block.pointRotation = blocks.at(-1).getX() + blocks.at(-1).getWidth();
             block.isRotating = true;
             block.clockWise = true;
             console.log(1);
         } else if (
-            (block.getX() + block.getWidth() * 0.5 <
-            blocks.at(-1).getX()) && !block.isRotating
+            (block.getX() + block.getWidth() * 0.5 < blocks.at(-1).getX()) && !block.isRotating
         ) {
             block.pointRotation = blocks.at(-1).getX();
             block.isRotating = true;
@@ -183,6 +182,7 @@ function collisionsBlock() {
             console.log(2);
         } else {
             if (!block.isColliding && !block.isRotating) {
+                blockPerfect()
                 block.isRotating = false;
                 block.isDown = false;
                 block.setVelX(0);
@@ -197,7 +197,12 @@ function collisionsBlock() {
         block.setIsColliding(true);
     }
 }
-
+function blockPerfect(){
+    if(Math.abs(block.getX()-blocks.at(-1).getX()) <= 10){
+        block.img = imgBlockP
+        block.setX(blocks.at(-1).getX())
+    }
+}
 function levels() {
     if (prevScore != score) {
         velHookBlock += score * 0.01;
