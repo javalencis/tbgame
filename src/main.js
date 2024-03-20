@@ -43,7 +43,7 @@ let block = new Block(
     imgBlock,
     hook.getX(),
     122,
-    imgBlock.width,
+    100,
     imgBlock.height
 );
 
@@ -61,7 +61,7 @@ let stones = []
 let zigZag = true;
 let interval;
 let velHookBlock = 6;
-let lives = 3;
+let lives = 100;
 let direction = 0.4;
 let timeDirection = 10;
 
@@ -167,19 +167,20 @@ function collisionsBlock() {
 
     if (detectCollision(block, blocks.at(-1))) {
         if (
-            (block.getX() > blocks.at(-1).getX() + blocks.at(-1).getWidth() * 0.5) && !block.isRotating
+            (block.getX() > blocks.at(-1).getX() + blocks.at(-1).getWidth() * 0.5) 
         ) {
+
             block.pointRotation = blocks.at(-1).getX() + blocks.at(-1).getWidth();
             block.isRotating = true;
             block.clockWise = true;
-            console.log(1);
+  
         } else if (
-            (block.getX() + block.getWidth() * 0.5 < blocks.at(-1).getX()) && !block.isRotating
+            (block.getX() + block.getWidth() * 0.5 < blocks.at(-1).getX()) 
         ) {
             block.pointRotation = blocks.at(-1).getX();
             block.isRotating = true;
             block.clockWise = false;
-            console.log(2);
+   
         } else {
             if (!block.isColliding && !block.isRotating) {
                 blockPerfect()
@@ -187,7 +188,7 @@ function collisionsBlock() {
                 block.isDown = false;
                 block.setVelX(0);
                 blocks.push(block);
-                console.log(3);
+
                 createBlock();
                 yDown = 0;
                 moveDownInit = 64;
@@ -274,7 +275,7 @@ function createClouds() {
         clouds[i] = new Cloud(
             ctx,
             imgCloud,
-            numRandom(0, canvas.width - 220),
+            numRandom(-30, 330),
             numRandom(-5000, 150),
             180,
             180,
@@ -360,6 +361,7 @@ function draw() {
 }
 
 function update() {
+
     clouds.forEach((item) => item.update());
     stones.forEach((item) => item.update());
     //sky.update()
