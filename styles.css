@@ -54,7 +54,7 @@ canvas{
 }
 
 .container .start{
-    display: flex;
+    display: none;
     height: 100%;
 
     flex-direction: column;
@@ -78,7 +78,7 @@ canvas{
 }
 .container .gameover{
     height: 100%;
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
@@ -107,6 +107,29 @@ canvas{
     -webkit-animation: sw 2s ease-in-out alternate infinite;
     animation: sw 2s ease-in-out alternate infinite;
 }   
+.content-cupon{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #ef8903;
+    padding: 10px;
+    cursor: pointer;
+}
+.content-cupon img{
+    width: 24px;
+    height: 28px;
+
+}
+
+.msn-cupon{
+    color: #ffffff;
+    font-size: 20px;
+    letter-spacing: 0.08em;
+   
+ 
+}
 
 @-webkit-keyframes sw {
     0% {

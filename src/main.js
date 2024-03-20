@@ -20,7 +20,7 @@ document.addEventListener("mousedown", mouseDown);
 
 const backgroundImg = new Image();
 const imgHook = new Image();
-const imgRope = new Image();
+
 const imgBlock = new Image();
 const imgBlockP = new Image();
 
@@ -29,7 +29,7 @@ const imgPatron = new Image();
 
 backgroundImg.src = "../assets/background.png";
 imgHook.src = "../assets/hook.gif";
-imgRope.src = "../assets/rope.png";
+
 imgBlock.src = "../assets/block.png";
 imgHeart.src = "../assets/heart.png";
 imgPatron.src = "../assets/bgame.png";
@@ -61,7 +61,7 @@ let stones = []
 let zigZag = true;
 let interval;
 let velHookBlock = 6;
-let lives = 100;
+let lives = 0;
 let direction = 0.4;
 let timeDirection = 10;
 
@@ -141,6 +141,7 @@ function blockOutScene() {
         // }
     }
 }
+
 function numRandom(min, max) {
     return Math.random() * (max - min) + min;
 }
@@ -353,7 +354,7 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBackgrounds();
     base.draw();
-    hook.draw(imgHook, imgRope);
+    hook.draw(imgHook);
     blocks.forEach((block) => block.draw());
     block.draw();
 
