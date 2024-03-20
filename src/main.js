@@ -20,12 +20,14 @@ const imgRope = new Image();
 const imgBlock = new Image();
 
 const imgHeart = new Image();
+const imgPatron = new Image();
 
 backgroundImg.src = "../assets/background.png";
 imgHook.src = "../assets/hook.gif";
 imgRope.src = "../assets/rope.png";
 imgBlock.src = "../assets/block.png";
 imgHeart.src = "../assets/heart.png";
+imgPatron.src = "../assets/bgame.png";
 
 canvas.width = backgroundImg.width;
 canvas.height = backgroundImg.height;
@@ -40,7 +42,7 @@ let block = new Block(
     imgBlock.height
 );
 
-const sky = new Sky(ctx, 0, 0, canvas.width, canvas.height);
+const sky = new Sky(ctx, 0,  -600, imgPatron.width, imgPatron.height);
 const base = new Base(ctx, 175, 332, 100, 60);
 
 let bgY = 0;
@@ -108,8 +110,8 @@ function createBlock() {
     );
 }
 function collisionBase() {
-    if (score === 0) {
-        if (detectCollision(block, base)) {
+    if(score === 0){
+        if (block.y + 66 >= 426) {
             block.isDown = false;
             blocks.push(block);
             createBlock();
@@ -120,6 +122,7 @@ function collisionBase() {
             score++;
         }
     }
+    
 }
 
 function blockOutScene() {
@@ -215,7 +218,7 @@ function scoreAndLives() {
 }
 function changeStates() {
     if (states.ready) {
-        if (hook.getX() < 170) {
+        if (hook.getX() < 172.5) {
             hook.setVelX(4);
             block.setVelX(4);
         } else {
@@ -225,6 +228,7 @@ function changeStates() {
         backgroundDown();
     } else if (states.play) {
         backgroundDown();
+        sky.update()
     }
 }
 function moveHookBlock() {
@@ -300,7 +304,8 @@ function createStones() {
 function drawBackgrounds() {
     canvas.width = backgroundImg.width;
     canvas.height = backgroundImg.height;
-    sky.draw(canvas);
+    sky.draw(imgPatron);
+    //ctx.drawImage(imgPatron, 0, 0, canvas.width, canvas.height);
     // clouds.forEach((item) => item.draw());
     // stones.forEach((item) => item.draw());
     ctx.drawImage(backgroundImg, 0, bgY, canvas.width, canvas.height);
@@ -320,7 +325,7 @@ function draw() {
 function update() {
     clouds.forEach((item) => item.update());
     stones.forEach((item) => item.update());
-
+    //sky.update()
     levels();
     if (zigZag) {
         movementZigZag();
