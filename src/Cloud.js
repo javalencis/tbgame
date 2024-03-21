@@ -1,12 +1,12 @@
 import { GameObject } from "./GameObject.js";
 
 class Cloud extends GameObject{
-    constructor(ctx,img,x,y,width,height,velX){
+    constructor(ctx,img,x,y,width,height,velX,canvas){
         super(ctx,x,y,width,height)
         this.img = img
         this.velX = velX
         this.prevX =0
-        console.log( img.src);
+        this.canvas = canvas
     }
 
     draw(){
@@ -19,7 +19,12 @@ class Cloud extends GameObject{
         this.y+=2
     }
     update(){
+
         this.moveX()
+        if(this.x + this.width/2 > this.canvas.width || this.x < -this.width/2 ){
+            this.velX *= -1;
+            this.prevX = 0;
+        }
         if (Math.abs((this.prevX + Math.abs(this.velX)) % 80) < 0.01) {
             this.velX *= -1;
             this.prevX = 0;

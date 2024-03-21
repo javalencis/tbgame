@@ -286,7 +286,8 @@ function createClouds() {
             numRandom(-5000, 150),
             180,
             180,
-            velClouds[parseInt(numRandom(0, 6))]
+            velClouds[parseInt(numRandom(0, 6))],
+            canvas
         );
     }
 }
@@ -394,6 +395,7 @@ function update() {
 }
 
 function gameloop() {
+
     update();
     draw();
     requestAnimationFrame(gameloop);
