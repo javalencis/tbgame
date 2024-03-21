@@ -28,13 +28,12 @@ const imgBlockP = new Image();
 const imgHeart = new Image();
 const imgPatron = new Image();
 
-backgroundImg.src = "../assets/background.png";
-imgHook.src = "../assets/hook.gif";
-
-imgBlock.src = "../assets/block.png";
-imgHeart.src = "../assets/heart.png";
-imgPatron.src = "../assets/bgame.png";
-imgBlockP.src = "../assets/blockp.png";
+backgroundImg.src = "https://tiendamic.com/gamification/mic/game-tower-blocks/assets/background.png";
+imgHook.src = "https://tiendamic.com/gamification/mic/game-tower-blocks/assets/hook.gif";
+imgBlock.src = "https://tiendamic.com/gamification/mic/game-tower-blocks/assets/block.png";
+imgHeart.src = "https://tiendamic.com/gamification/mic/game-tower-blocks/assets/heart.png";
+imgPatron.src = "https://tiendamic.com/gamification/mic/game-tower-blocks/assets/bgame.png";
+imgBlockP.src = "https://tiendamic.com/gamification/mic/game-tower-blocks/assets/blockp.png";
 canvas.width = backgroundImg.width;
 canvas.height = backgroundImg.height;
 
@@ -272,9 +271,9 @@ function hookBlock() {
 function createClouds() {
     let velClouds = [0.4, -0.4, 0.2, -0.2, 0.6, -0.6];
     const cloudsSrc = [
-        "../assets/gr1.png",
-        "../assets/gr2.png",
-        "../assets/gr3.png",
+        "https://tiendamic.com/gamification/mic/game-tower-blocks/assets/gr1.png",
+        "https://tiendamic.com/gamification/mic/game-tower-blocks/assets/gr2.png",
+        "https://tiendamic.com/gamification/mic/game-tower-blocks/assets/gr3.png",
     ];
 
     for (let i = 0; i < 20; i++) {
@@ -307,6 +306,7 @@ function gameOver() {
     if (lives === 0) {
         states.gameover = true;
         document.removeEventListener("mousedown", mouseDown);
+        document.removeEventListener("touchstart", mouseDown);
         if (score <= 10) {
             txtCupon.textContent = "SHIPGAMER";
         } else if (score <= 20) {
