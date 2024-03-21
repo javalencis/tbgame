@@ -319,14 +319,19 @@ function gameOver() {
         cGameOver.style.display = "none";
     }
     if (states.gameover) {
-        let text = document.querySelector(".msn-cupon").innerHTML;
         let btCopy = document.querySelector(".content-cupon");
-        const copy = () => {
-            navigator.clipboard.writeText(text);
-            console.log("Cupon copiado");
-        };
         btCopy.addEventListener("click", copy);
+        states.gameover = false
     }
+}
+function copy(){
+    let text = document.querySelector(".msn-cupon").innerHTML;
+    const tempInput = document.createElement('input');
+    tempInput.setAttribute("value", text);
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
 }
 
 function again() {
