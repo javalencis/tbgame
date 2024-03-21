@@ -3,7 +3,10 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+@font-face {
+    font-family: "golden";
+    src: url("./fonts/golden.ttf");
+  }
 
 body{
     width: 100%;
@@ -13,7 +16,7 @@ body{
     align-items: center;
     position: relative;
    
-
+    font-family: "golden";
 }
 canvas{
 
@@ -128,9 +131,14 @@ canvas{
 .msn-cupon{
     color: #ffffff;
     font-size: 20px;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
    
  
+}
+.p-check{
+    display: none;
+    color: #fff92e;
+    font-size: 15px;
 }
 
 @-webkit-keyframes sw {

@@ -4,7 +4,7 @@ import { Sky } from "./Sky.js";
 import { Base } from "./Base.js";
 import { detectCollision } from "./utils.js";
 import { Cloud } from "./Cloud.js";
-
+const pCheck = document.querySelector(".p-check")
 const btStart = document.querySelector(".start-button");
 const btGameOver = document.querySelector(".gameover-button");
 const titleStart = document.querySelector(".start-top");
@@ -329,12 +329,14 @@ function gameOver() {
 }
 function copy(){
     let text = document.querySelector(".msn-cupon").innerHTML;
+   
     const tempInput = document.createElement('input');
     tempInput.setAttribute("value", text);
     document.body.appendChild(tempInput);
     tempInput.select();
     document.execCommand('copy');
     document.body.removeChild(tempInput);
+    pCheck.style.display = 'block'
 }
 
 function again() {
@@ -372,6 +374,8 @@ function again() {
     };
 
     document.addEventListener("mousedown", mouseDown);
+    document.addEventListener("touchstart",mouseDown)
+    pCheck.style.display = 'none'
 }
 
 function draw() {
