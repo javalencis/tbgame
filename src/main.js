@@ -17,6 +17,7 @@ const ctx = canvas.getContext("2d");
 btStart.addEventListener("click", start);
 btGameOver.addEventListener("click", again);
 document.addEventListener("mousedown", mouseDown);
+document.addEventListener("touchstart", mouseDown);
 
 const backgroundImg = new Image();
 const imgHook = new Image();
