@@ -270,18 +270,21 @@ function hookBlock() {
 }
 function createClouds() {
     let velClouds = [0.4, -0.4, 0.2, -0.2, 0.6, -0.6];
+    const imgCloud1 = new Image();
+    const imgCloud2 = new Image();
+    const imgCloud3 = new Image();
+    imgCloud1.src = "https://tiendamic.com/gamification/mic/game-tower-blocks/assets/gr1.png";
+    imgCloud2.src = "https://tiendamic.com/gamification/mic/game-tower-blocks/assets/gr2.png";
+    imgCloud3.src = "https://tiendamic.com/gamification/mic/game-tower-blocks/assets/gr3.png";
     const cloudsSrc = [
-        "https://tiendamic.com/gamification/mic/game-tower-blocks/assets/gr1.png",
-        "https://tiendamic.com/gamification/mic/game-tower-blocks/assets/gr2.png",
-        "https://tiendamic.com/gamification/mic/game-tower-blocks/assets/gr3.png",
+        imgCloud1,
+        imgCloud2,
+        imgCloud3
     ];
-
     for (let i = 0; i < 20; i++) {
-        const imgCloud = new Image();
-        imgCloud.src = cloudsSrc[parseInt(numRandom(0, 3))];
         clouds[i] = new Cloud(
             ctx,
-            imgCloud,
+            cloudsSrc[parseInt(numRandom(0, 3))],
             numRandom(-30, 330),
             numRandom(-5000, 150),
             180,
