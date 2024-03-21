@@ -65,7 +65,6 @@ export let states = {
 };
 
 function start() {
-    console.log("click");
     btStart.classList.add("slideBottom");
     titleStart.classList.add("slideTop");
     setTimeout(function () {
@@ -80,7 +79,6 @@ function mouseDown() {
         block.isDown = true;
         hook.hasItem = false;
     }
-    console.log("down");
 }
 
 function backgroundDown() {
