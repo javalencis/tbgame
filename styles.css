@@ -94,7 +94,7 @@ canvas{
 }
 
 .container .gameover-content{
-    width: 100%;
+    width: 70%;
     height: 100%;
     position: absolute;
     display: flex;
@@ -127,7 +127,14 @@ canvas{
     height: 28px;
 
 }
+.content-text{
+    color: white;
+    text-align: justify;
+}
+.content-text strong{
+    color: #2ec4ff;
 
+}
 .msn-cupon{
     color: #ffffff;
     font-size: 20px;

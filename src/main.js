@@ -10,6 +10,7 @@ const btGameOver = document.querySelector(".gameover-button");
 const titleStart = document.querySelector(".start-top");
 const cStart = document.querySelector(".start");
 const txtCupon = document.querySelector(".msn-cupon");
+const txtCont= document.querySelector(".content-text");
 const cGameOver = document.querySelector(".gameover");
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
@@ -311,10 +312,13 @@ function gameOver() {
         document.removeEventListener("mousedown", mouseDown);
         document.removeEventListener("touchstart", mouseDown);
         if (score <= 10) {
+            txtCont.innerHTML = "¡Buen intento! Te falta práctica, pero tu esfuerzo merece <strong>ENVÍO GRATIS</strong>. Redímelo usando el siguiente código en tu compra:";
             txtCupon.textContent = "SHIPGAMER";
         } else if (score <= 20) {
+            txtCont.innerHTML = "¡Vas por buen camino! Este resultado merece un <strong>5% EXTRA</strong> de DESCUENTO. Redímelo usando el siguiente código en tu compra:";
             txtCupon.textContent = "5PLAYER";
         } else {
+            txtCont.innerHTML = "¡Nadie te supera! Tus resutados merecen <strong>10% EXTRA</strong> de DESCUENTO. Redímelo usando el siguiente código en tu compra:";
             txtCupon.textContent = "WINNER10";
         }
         cGameOver.style.display = "flex";
@@ -328,7 +332,8 @@ function gameOver() {
     }
 }
 function copy(){
-    let text = document.querySelector(".msn-cupon").innerHTML;
+    let text = txtCupon.innerHTML;
+
    
     const tempInput = document.createElement('input');
     tempInput.setAttribute("value", text);
